@@ -1,0 +1,69 @@
+//UC1
+create database address_book;
+
+use address_book;
+
+//UC2
+mysql> create table address_book
+    -> (ID int unsigned not null auto_increment,
+    -> firstName varchar(10) not null,
+    -> lastName varchar(20) not null,
+    -> address varchar(100) not null,
+    -> city varchar(10) not null,
+    -> state varchar(10) not null,
+    -> zipCode varchar(15) not null,
+    -> phoneNumber varchar(22) not null,
+    -> email varchar(50) not null,
+    -> primary key(id));
+
+//UC3
+mysql> insert into address_book(firstName,lastName,address,city,state,zipCode,phoneNumber,email)
+    -> values('Devesh','Bhangale','hiranandani complex','kharghar','MH','410210','0001213209','deveshtb@gmail.com'),
+    -> ('John','Cena','manhattan','new york','NY','92103','345353535476','johncena@wwe.com'),
+    -> ('JJ','Olatunji','123 avenue','london','UK','020','12312331432','ksi@sidemen.com'),
+    -> ('Lando','Norris','wembley','london','UK','020','12312312313','norris@f1.com');
+
+//UC4
+mysql> update address_book set phoneNumber = '123090787' where firstName ='Lando';
+
+//UC5
+mysql> delete from address_book where firstName = 'Devesh' and lastName = 'Bhangale';
+mysql>  SET  @num := 0;
+mysql> UPDATE address_book SET id = @num := (@num+1);
+
+//UC6
+mysql> select * from address_book where city = 'london';
+mysql> select * from address_book where state = 'NY';
+
+//UC7
+mysql> select count(city) from address_book where city = 'london';
+mysql> select count(state) from address_book where state = 'NY';
+
+//UC8
+mysql> select * from address_book where city ='london' order by firstName asc;
+
+//UC9
+mysql> alter table address_book add type varchar(10) not null;
+mysql> update address_book set type = 'wrestler' where id in(1,2);
+mysql> update address_book set type = 'f1 driver' where id=3;
+
+//UC10
+mysql> select type,count(type) from address_book where type = 'wrestler';
+
+//UC11
+mysql> insert into address_book(firstName,lastName,address,city,state,zipCode,phoneNumber,email,type) values
+    -> ('JJ','Olatunji','123 avenue','london','UK','020','12312331432','ksi@sidemen.com','youtuber'),
+    -> ('Lewis','Hamilton','brighton','london','UK','020','12312312313','hamilton@f1.com','f1 driver');
+
+
+mysql> select * from address_book;
++----+-----------+----------+------------+----------+-------+---------+--------------+------------------+-----------+
+| ID | firstName | lastName | address    | city     | state | zipCode | phoneNumber  | email            | type      |
++----+-----------+----------+------------+----------+-------+---------+--------------+------------------+-----------+
+|  1 | John      | Cena     | manhattan  | new york | NY    | 92103   | 345353535476 | johncena@wwe.com | wrestler  |
+|  2 | JJ        | Olatunji | 123 avenue | london   | UK    | 020     | 12312331432  | ksi@sidemen.com  | wrestler  |
+|  3 | Lando     | Norris   | wembley    | london   | UK    | 020     | 123090787    | norris@f1.com    | f1 driver |
+|  5 | JJ        | Olatunji | 123 avenue | london   | UK    | 020     | 12312331432  | ksi@sidemen.com  | youtuber  |
+|  6 | Lewis     | Hamilton | brighton   | london   | UK    | 020     | 12312312313  | hamilton@f1.com  | f1 driver |
++----+-----------+----------+------------+----------+-------+---------+--------------+------------------+-----------+
+5 rows in set (0.00 sec)
