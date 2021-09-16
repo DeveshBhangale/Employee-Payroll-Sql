@@ -44,3 +44,21 @@ select gender, count(name) from employee_payroll group by gender;
 SELECT SUM(salary) FROM employee_payroll
     -> WHERE gender = 'F' GROUP BY gender;
 
+//UC8
+mysql> alter table employee_payroll add phone varchar(15) not null after gender;
+mysql> alter table employee_payroll add address varchar(100) DEFAULT 'xyz' after phone,
+    -> add department varchar(15) not null after address;
+
+//UC9
+mysql> alter table employee_payroll add basicPay int not null after salary,
+    -> add deductions int not null after basicPay,
+    -> add taxablePay int not null after deductions,
+    -> add incomeTax int not null after taxablePay,
+    -> add netPay int not null after incomePay;
+
+//UC10
+mysql> insert into employee_payroll (name, gender,phone,address,department,salary,basicPay,deductions,taxablePay,incomePay,netPay,start)
+    -> select name, gender,phone,address,department,salary,basicPay,deductions,taxablePay,incomePay,netPay,start
+    -> from  employee_payroll where id = 2;
+mysql> update employee_payroll set department = 'sales' where id =2;
+mysql> update employee_payroll set department = 'marketing' where id =4;
